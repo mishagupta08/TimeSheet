@@ -1,0 +1,45 @@
+﻿@model TimeSheet.Models.ChatViewModel
+@using TimeSheet.Properties
+@{
+    ViewBag.Title = "chatForumView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.IssueDetailsList == null || Model.IssueDetailsList.Count == 0)
+{
+    <div>No record Found</div>
+}
+else
+{
+    @*<button id="export">Export</button>*@
+
+foreach (var issueDetail in Model.IssueDetailsList)
+{
+    <div>
+        <span>
+            @issueDetail.PostedDate
+        </span>
+
+        @if (@issueDetail.IsEditable)
+        {
+            <a href="@Url.Action("Index", "ChatForum", new { editId = issueDetail.IssueId })"><img src="~/images/edit.png" height="20" /></a>
+        }
+
+        <br /><br />
+        <p>
+            @issueDetail.Issue
+        </p>
+        <span>@issueDetail.PostedBy</span>
+        <br />
+        <span>Email: </span><span>@issueDetail.EmailId</span>
+        <br /><br />
+        <span>-------------------------------------------------</span>
+    </div>
+    }
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+
+<script src="~/Scripts/project/dashboard.js"></script>

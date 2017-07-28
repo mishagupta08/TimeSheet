@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DtCareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Designation" Type="varchar" MaxLength="25" />
+          <Property Name="DOB" Type="varchar" MaxLength="12" />
+          <Property Name="MaritalStatus" Type="varchar" MaxLength="9" />
+          <Property Name="AnniversaryDate" Type="varchar" MaxLength="12" />
+          <Property Name="ContactNo" Type="varchar" MaxLength="12" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Experience" Type="varchar" MaxLength="5" />
+          <Property Name="ReportingTo" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="40" />
+          <Property Name="JoiningDate" Type="varchar" MaxLength="12" />
+          <Property Name="RoleId" Type="varchar" MaxLength="2" />
+          <Property Name="username" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="IssueDetailTable">
+          <Key>
+            <PropertyRef Name="IssueId" />
+          </Key>
+          <Property Name="IssueId" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Issue" Type="ntext" />
+          <Property Name="PostedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostedDate" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ProjectDetail">
+          <Key>
+            <PropertyRef Name="ProjectKey" />
+          </Key>
+          <Property Name="ProjectKey" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartDate" Type="varchar" MaxLength="12" />
+          <Property Name="EndDate" Type="varchar" MaxLength="12" />
+          <Property Name="Status" Type="varchar" MaxLength="14" />
+          <Property Name="AllottedHours" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="12" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="70" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="ntext" />
+          <Property Name="DomainName" Type="nvarchar" MaxLength="70" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientCoordinatorName" Type="nvarchar" MaxLength="70" />
+          <Property Name="ClientCoordinatorMobileNumber" Type="nvarchar" MaxLength="12" />
+          <Property Name="ClientCoordinatorEmail" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="WorkDetail">
+          <Key>
+            <PropertyRef Name="WorkDetailId" />
+          </Key>
+          <Property Name="WorkDetailId" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="EmployeeId" Type="varchar" MaxLength="7" />
+          <Property Name="EmployeeName" Type="varchar" MaxLength="100" />
+          <Property Name="ProjectName" Type="varchar" MaxLength="50" />
+          <Property Name="Hours" Type="varchar" MaxLength="5" />
+          <Property Name="Remarks" Type="varchar" MaxLength="1000" />
+          <Property Name="Date" Type="varchar" MaxLength="20" />
+          <Property Name="WorkProjectName" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityContainer Name="DtCareModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueDetailTable" EntityType="Self.IssueDetailTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectDetail" EntityType="Self.ProjectDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkDetail" EntityType="Self.WorkDetail" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DtCareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="AnniversaryDate" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Experience" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ReportingTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="JoiningDate" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Role1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WorkDetail">
+          <Key>
+            <PropertyRef Name="WorkDetailId" />
+          </Key>
+          <Property Name="WorkDetailId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hours" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WorkProjectName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="DtCareEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="WorkDetails" EntityType="Self.WorkDetail" />
+          <EntitySet Name="ProjectDetails" EntityType="DtCareModel.ProjectDetail" />
+          <EntitySet Name="IssueDetailTables" EntityType="DtCareModel.IssueDetailTable" />
+        </EntityContainer>
+        <EntityType Name="ProjectDetail">
+          <Key>
+            <PropertyRef Name="ProjectKey" />
+          </Key>
+          <Property Name="ProjectKey" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="EndDate" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="AllottedHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MobileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DomainName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientCoordinatorName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="ClientCoordinatorMobileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="ClientCoordinatorEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IssueDetailTable">
+          <Key>
+            <PropertyRef Name="IssueId" />
+          </Key>
+          <Property Name="IssueId" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Issue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostedDate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DtCareModelStoreContainer" CdmEntityContainer="DtCareEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="DtCareModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="AnniversaryDate" ColumnName="AnniversaryDate" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="ReportingTo" ColumnName="ReportingTo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DtCareModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkDetails">
+            <EntityTypeMapping TypeName="DtCareModel.WorkDetail">
+              <MappingFragment StoreEntitySet="WorkDetail">
+                <ScalarProperty Name="WorkProjectName" ColumnName="WorkProjectName" />
+                <ScalarProperty Name="WorkDetailId" ColumnName="WorkDetailId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectDetails">
+            <EntityTypeMapping TypeName="DtCareModel.ProjectDetail">
+              <MappingFragment StoreEntitySet="ProjectDetail">
+                <ScalarProperty Name="ClientCoordinatorEmail" ColumnName="ClientCoordinatorEmail" />
+                <ScalarProperty Name="ClientCoordinatorMobileNumber" ColumnName="ClientCoordinatorMobileNumber" />
+                <ScalarProperty Name="ClientCoordinatorName" ColumnName="ClientCoordinatorName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="AllottedHours" ColumnName="AllottedHours" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProjectKey" ColumnName="ProjectKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IssueDetailTables">
+            <EntityTypeMapping TypeName="DtCareModel.IssueDetailTable">
+              <MappingFragment StoreEntitySet="IssueDetailTable">
+                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
+                <ScalarProperty Name="Issue" ColumnName="Issue" />
+                <ScalarProperty Name="IssueId" ColumnName="IssueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

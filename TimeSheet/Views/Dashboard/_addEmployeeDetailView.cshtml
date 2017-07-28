@@ -1,0 +1,173 @@
+﻿@model TimeSheet.Models.DashboardViewModel
+@{
+    ViewBag.Title = "_addEmployeeDetailView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="white-box">
+            <form class="form-horizontal form-material" id="employeeform" onsubmit="return SaveEmployeeDetail();">
+                @Html.HiddenFor(m => m.EmployeeDetail.EmployeeId)
+                <div class="form-body">
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Name*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.Name, new { @id = "name", @required = "", @class = "form-control", @placeholder = "Name" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">DOB*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.DOB, new { @id = "dateinput", @required = "", @class = "form-control datepicker", @placeholder = "dd/mm/yyyy" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Designation*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.Designation, new { @id = "designation", @required = "", @class = "form-control", @placeholder = "Designantion" })
+                        </div>
+
+                    </div>
+                    @if (Model.ReportingEmployeeList != null)
+                    {
+                        <div class="form-group ">
+                            <label class="control-label col-md-3">ReportingTo*</label>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.EmployeeDetail.ReportingTo, new SelectList(Model.ReportingEmployeeList, "Id", "Value"), new { @required = "0", id = "maritalStatusDropDown", @class = "form-control" })
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Marital Status*</label>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.EmployeeDetail.MaritalStatus, new SelectList(Model.MaritalStatusList, "Id", "Value"), new { @required = "0", id = "maritalStatusDropDown", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Role*</label>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.EmployeeDetail.RoleId, new SelectList(Model.Roles, "Id", "Value"), new { @required = "0", id = "rolesDropDown", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Anniversary Date*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.AnniversaryDate, new { @id = "anniversaryDate", @required = "", @class = "form-control datepicker", @placeholder = "dd/mm/yyyy" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Email*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.EmailId, new { @id = "email", @required = "", @type = "email", @class = "form-control", @placeholder = "EmailId" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Mobile No.*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.ContactNo, new { @id = "contactNo", @type = "number", @maxlength = 10, @minlength = 10, @required = "", @class = "form-control", @placeholder = "Contact" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Address*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.Address, new { @id = "address", @rows = "5", @cols = "10", @required = "", @class = "form-control", @placeholder = "Address" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Experience*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.Experience, new { @id = "eperience", @required = "", @class = "form-control", @placeholder = "Experience" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Joining Date*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.JoiningDate, new { @id = "joiningDate", @required = "", @class = "form-control datepicker", @placeholder = "dd/mm/yyyy" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Username*</label>
+
+                        @if (Model.EmployeeDetail == null || Model.EmployeeDetail.EmployeeId == null)
+                        {
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.EmployeeDetail.Username, new { @id = "username", @required = "", @class = "form-control", @placeholder = "Username" });
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.EmployeeDetail.Username, new { @readonly = "true", @id = "username", @required = "", @class = "form-control", @placeholder = "Username" });
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Password*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.EmployeeDetail.Password, new { @type = "password", @id = "password", @required = "", @class = "form-control", @placeholder = "Password" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeDetail.IsActive, new { @class = "col-md-3", @style = "text-align:right;" })
+                        <div class="col-md-3">
+                            @Html.CheckBoxFor(m => m.EmployeeDetail.IsActive)
+                        </div>
+                    </div>
+                    <label id="error" class="login-error"></label>
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-md-1">
+                            <button type="submit" id="saveButton" on" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">Save</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="reset" id="resetButton" on" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Bootstrap Core JavaScript -->
+        <!-- Menu Plugin JavaScript -->
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script>
+    var jq = $.noConflict();
+    var dateToday = new Date();
+    jq(document).ready(function () {
+        // Date Picker
+        jq('#dateinput').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            dateFormat: "dd-mm-yy",
+            //minDate: dateToday
+        });
+
+        jq('#anniversaryDate').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            dateFormat: "dd-mm-yy",
+            // minDate: dateToday
+        });
+        jq('#joiningDate').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            dateFormat: "dd-mm-yy",
+            //minDate: dateToday
+        });
+    });
+</script>
+
+<script src="~/Scripts/project/dashboard.js"></script>

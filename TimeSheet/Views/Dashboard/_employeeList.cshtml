@@ -1,0 +1,89 @@
+﻿@model TimeSheet.Models.DashboardViewModel
+@using TimeSheet.Properties
+@{
+    ViewBag.Title = "_employeeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.EmployeeList == null || Model.EmployeeList.Count == 0)
+{
+    <div>No record Found</div>
+}
+else
+{
+    <button id="export">Export</button>
+
+    <table border="1" id="table2excel">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Joining Date</th>
+                <th>Designation</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Date Of Birth</th>
+                <th>Reporting</th>
+                <th>Experience</th>
+                <th>Marital Status</th>
+                <th>Anniversary</th>
+                <th>Address</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model.EmployeeList)
+                {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.AddEmployee, editId = emp.EmployeeId })">@emp.EmployeeId</a>
+                    </td>
+                    <td>
+                        @emp.Name
+                    </td>
+                    <td>@emp.JoiningDate</td>
+                    <td>
+                        @emp.Designation
+                    </td>
+                    <td>
+                        @emp.ContactNo
+                    </td>
+                    <td>
+                        @emp.EmailId
+                    </td>
+                    <td>@emp.DOB</td>
+                    <td>@emp.ReportingPersonName</td>
+                    <td>@emp.Experience</td>
+                    <td>@emp.MaritalStatus</td>
+                    <td>@emp.AnniversaryDate</td>
+                    <td>@emp.Address</td>
+                    <td>@emp.IsActive</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+
+<script src="~/Scripts/jquery.table2excel.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#export").click(function () {
+            var dateToday = new Date();
+            $("#table2excel").table2excel({
+                exclude: ".noExl",
+                name: "Excel Document Name",
+                filename: "EmployeeList-" + dateToday,
+                fileext: ".xls",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        });
+    });
+</script>
+<script src="~/Scripts/project/dashboard.js"></script>

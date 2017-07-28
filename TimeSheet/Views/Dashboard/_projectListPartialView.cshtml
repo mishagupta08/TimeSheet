@@ -1,0 +1,162 @@
+﻿@model TimeSheet.Models.DashboardViewModel
+@using TimeSheet.Properties
+@{
+    Layout = null;
+}
+
+<div id="dialog" title="Delete Project" style="display:none;">
+    <span id="projectId" style="display:none;"></span>
+    <p>Are You Sure!!</p>
+    <button type="button" name="deleteButton">Yes</button>
+    <button type="button" Id="errorNoButton">No</button>
+</div>
+
+<div id="errorDialog" title="Error" style="display:none;">
+    <p id="errorDetail"></p>
+    <button type="button" Id="errorCloseButton">Ok</button>
+</div>
+
+@if (Model.ProjectList == null || Model.ProjectList.Count == 0)
+{
+    <div>No record Found</div>
+}
+else
+{
+    <button id="export">Export</button>
+    <table border="1" id="table2excel">
+        <thead>
+            <tr>
+                <th>Project ID</th>
+                <th width="200">Project Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Alloted Hour</th>
+                <th>Consumed Hour</th>
+                <th>Remaining Hour</th>
+                <th>Client Detail</th>
+
+                <th>Client Coordinator Detail</th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model.ProjectList)
+            {
+                var address = emp.Address + " " + emp.City + " " + emp.State + " ";
+
+                <tr>
+                    <td>
+                        <a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.AddProject, editId = emp.Id })">@emp.Id</a>
+                    </td>
+                    <td width="200">
+                        @emp.Name
+                    </td>
+                    <td>@emp.StartDate</td>
+                    <td>
+                        @emp.EndDate
+                    </td>
+                    <td>
+                        @emp.Status
+                    </td>
+                    <td>
+                        @emp.AllottedHour
+                    </td>
+                    <td>
+                        @emp.ConsumedHours
+                    </td>
+                    <td>
+                        @emp.RemainingHour
+                    </td>
+                    <td>@Html.Raw(emp.ClientDetail)</td>
+                    <td>@Html.Raw(emp.ClientCoordinatorDetail)</td>
+
+                    <td><img src="~/images/delete.png" height="20" name="deleteProject" data-id=@emp.Id /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.table2excel.min.js"></script>
+
+<script>
+    var jq = $.noConflict();
+    jq(".preloader").hide();
+    jq(document).ready(function () {
+        if (jq("#export").length > 0) {
+            jq("#export").unbind();
+
+            jq("#export").click(function () {
+                jq("#table2excel").unbind();
+                var dateToday = new Date();
+                jq("#table2excel").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name",
+                    filename: "ProjectList-" + dateToday,
+                    fileext: ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true
+                });
+            });
+        }
+
+        jq("img[name=deleteProject]").click(function () {
+            jq("#dialog").dialog({
+                dialogClass: "noclose"
+            });
+
+            jq("#projectId").html("");
+            var editId = jq(this).attr("data-id");
+            jq("#projectId").html(editId);
+        });
+
+        $("#errorNoButton").click(function () {
+            $(".ui-dialog-titlebar-close").click();
+        });
+
+        $("button[name=deleteButton]").click(function () {
+            var projId = $("#projectId").html()
+            $(".preloader").show();
+            $.ajax({
+                url: '/Dashboard/DeleteProject',
+                type: 'Post',
+                datatype: 'Json',
+                data: { editId: projId }
+            }).done(function (result) {
+                if (result == "" || result == undefined) {
+                    $(".ui-dialog-titlebar-close").click();
+                    window.location.href = '/Dashboard/GetProjectList';
+                }
+                else {
+                    $(".ui-dialog-titlebar-close").click();
+                    $("#errorDetail").html(result);
+                    $(".preloader").hide();
+                    jq("#errorDialog").dialog({
+                        dialogClass: "noclose"
+                    });
+
+                    $("#errorCloseButton").click(function () {
+                        $(".ui-dialog-titlebar-close").click();
+                    });
+                }
+
+            }).fail(function (error) {
+                $("#errorDetail").html(error.statusText);
+                $(".preloader").hide();
+                jq("#errorDialog").dialog();
+            });
+
+            return false;
+        });
+    });
+</script>
+<style>
+    .noclose .ui-dialog-titlebar-close {
+        display: none;
+    }
+</style>

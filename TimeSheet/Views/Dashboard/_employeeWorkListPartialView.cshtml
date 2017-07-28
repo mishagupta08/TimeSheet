@@ -1,0 +1,98 @@
+﻿@model TimeSheet.Models.DashboardViewModel
+@using TimeSheet.Properties
+
+@{
+    Layout = null;
+}
+
+@if (Model == null || Model.TeamWorkingHourDetail == null || Model.TeamWorkingHourDetail.Count() == 0)
+{
+    <div>No Record Found</div>
+}
+else
+{
+    <button id="export">Export</button>
+    <table border="1" id="table2excel">
+        <thead>
+            <tr><th colspan="4">Work Detail List</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var f in @Model.TeamWorkingHourDetail)
+                {
+                <tr style="background-color: antiquewhite; border: none;">
+                    <td> ID: @f.EmployeeId </td>
+                    <td> #@f.EmployeeName</td>
+                    <td> Date</td>
+                    <td> @f.WorkDate</td>
+                </tr>
+                <tr>
+                    <td>
+                        S.No.
+                    </td>
+                    <td>
+                        Project
+                    </td>
+                    <td>
+                        Hour
+                    </td>
+                    <td>
+                        Remark
+                    </td>
+                </tr>
+                var sno = 0;
+                foreach (var detail in f.HourDetail)
+                {
+                    sno++;
+                    <tr>
+                        @if (Session["LoginUserId"].ToString() == detail.EmployeeId)
+                        {
+
+                            <td><a href="@Url.Action("Index", "Timesheet", new { editId = detail.Id })">@sno</a></td>
+                        }
+                        else
+                        {
+                            <td>@sno</td>
+                        }
+                        <td>@detail.WorkProjectName</td>
+                        <td>@detail.Hours</td>
+                        <td>@detail.Remarks</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4">
+                        -----------------------------------------
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.table2excel.min.js"></script>
+<script>
+    var jq = $.noConflict();
+    jq(".preloader").hide();
+    jq(document).ready(function () {
+        if (jq("#export").length > 0) {
+            jq("#export").unbind();
+            jq("#export").click(function () {
+                jq("#table2excel").unbind();
+                var dateToday = new Date();
+                jq("#table2excel").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name",
+                    filename: "WorkReport-" + dateToday,
+                    fileext: ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true
+                });
+            });
+        }
+    });
+</script>

@@ -1,0 +1,150 @@
+﻿@model TimeSheet.Models.DashboardViewModel
+@{
+    ViewBag.Title = "_addProjectDetailView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="white-box">
+            <form class="form-horizontal form-material" id="projectform" onsubmit="return SaveProjectDetail();">
+                @Html.HiddenFor(m => m.ProjectDetails.Id)
+                <div class="form-body">
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Name*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.Name, new { @id = "name", @required = "", @class = "form-control", @placeholder = "Project Name" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Stat Date*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.StartDate, new { @id = "startDate", @required = "", @class = "form-control datepicker", @placeholder = "dd/mm/yyyy" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Project Delivery Date*</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.EndDate, new { @id = "endDate", @required = "", @class = "form-control", @placeholder = "dd/mm/yyyy" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Project Status*</label>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(m => m.ProjectDetails.Status, new SelectList(Model.ProjectDetails.StatusList, "Id", "Value"), new { @required = "0", id = "projectStatusDropDown", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Client Name</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.ClientName, new { @id = "clientName", @class = "form-control", @placeholder = "Client Name" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Mobile Number</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.MobileNumber, new { @id = "mobileNumber", @class = "form-control", @placeholder = "Mobile Number" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Email</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.Email, new { @id = "email", @class = "form-control", @placeholder = "Email" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Address</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.Address, new { @id = "address", @class = "form-control", @placeholder = "Address" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Domain Name</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.DomainName, new { @id = "domain", @class = "form-control", @placeholder = "Domain Name" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">City</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.City, new { @id = "city", @class = "form-control", @placeholder = "City" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">State</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.State, new { @id = "state", @class = "form-control", @placeholder = "City" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Client Coordinator Name</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.ClientCoordinatorName, new { @id = "clientCoordinatorName", @class = "form-control", @placeholder = "Client Coordinator Name" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Client Coordinator Mobile Number</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.ClientCoordinatorMobileNumber, new { @id = "clientCoordinatorMobileNumber", @class = "form-control", @placeholder = "Client Coordinator Mobile Number" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label col-md-3">Client Coordinator Email</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(m => m.ProjectDetails.ClientCoordinatorEmail, new { @id = "clientCoordinatorEmail", @class = "form-control", @placeholder = "Client Coordinator Email" })
+                        </div>
+                    </div>
+
+
+                    <label id="error" class="login-error"></label>
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-md-1">
+                            <button type="submit" id="saveButton" on" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">Save</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="reset" id="resetButton" on" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Bootstrap Core JavaScript -->
+        <!-- Menu Plugin JavaScript -->
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script>
+    var jq = $.noConflict();
+    var dateToday = new Date();
+    jq(document).ready(function () {
+        // Date Picker
+        jq('#startDate').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            dateFormat: "dd-mm-yy",
+            // minDate: dateToday
+        });
+
+        jq('#endDate').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            dateFormat: "dd-mm-yy",
+            // minDate: dateToday
+        });
+    });
+</script>
+
+<script src="~/Scripts/project/dashboard.js"></script>

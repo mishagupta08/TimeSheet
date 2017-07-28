@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Timesheet</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body class="fix-sidebar">
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <img src="~/images/wheel.gif" height="100" />
+    </div>
+
+    <div id="wrapper">
+        <!-- Top Navigation -->
+        @RenderPage("~/Views/Shared/menus.cshtml")
+        <!-- End Top Navigation -->
+        @*@RenderPage("~/Views/Shared/sidebar.cshtml")*@
+        <!-- Left navbar-header end -->
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <br />
+                @RenderBody()
+                <!-- .right-sidebar -->
+            </div>
+            <!-- /.container-fluid -->
+            @*<footer class="footer text-center"> 2017 &copy; Utility Portal Master Admin </footer>*@
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+</body>
+</html>
+

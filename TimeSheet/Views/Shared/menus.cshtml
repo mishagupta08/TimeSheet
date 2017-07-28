@@ -1,0 +1,62 @@
+﻿@using TimeSheet.Properties;
+
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+        <ul class="nav" id="side-menu">
+            @*<li class="sidebar-search hidden-sm hidden-md hidden-lg">
+                    <!-- input-group -->
+                    <div class="input-group custom-search-form">
+                        <input class="form-control" placeholder="@Resources.Search" type="text"> <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
+                        </span>
+                    </div>
+                    <!-- /input-group -->
+                </li>*@
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"> Dashboard <span class="fa arrow"></span> </span></a>
+                @*<ul class="nav nav-second-level collapse" aria-expanded="true">
+                        <li> <a href="index.html">Basic</a> </li>
+                        <li> <a href="index2.html">Pending Approvals</a> </li>
+                    </ul>*@
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Timesheet", new { editId = string.Empty})" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Add Timesheet<span class="fa arrow"></span></span></a>
+            </li>
+
+            @if (Session["LoginUserRoleId"].ToString() == Resources.AdminRoleId)
+            {
+                <li>
+                    <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Project<span class="fa arrow"></span> </span></a>
+                    <ul class="nav nav-second-level collapse" aria-expanded="true">
+                        @*<li><a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.AddEmployee })">@Resources.AddEmployee</a></li>*@
+                        <li><a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.AddProject })">@Resources.AddProject</a></li>
+                        <li><a href="@Url.Action("GetProjectList", "Dashboard")">Project List</a></li>
+                    </ul>
+                </li>
+            }
+
+            <li>
+                <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Reports<span class="fa arrow"></span></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="true">
+                    <li><a href="@Url.Action("GetWorkingHourList", "Dashboard")">Working Hour</a></li>
+                    @*<li><a href="@Url.Action("GetEmployeeList", "Dashboard")">Employee List</a></li>*@
+
+                    @*<li><a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.DefaulterList })">@Resources.DefaulterList</a></li>*@
+                </ul>
+            </li>
+
+            <li>
+                <a href="#" class="waves-effect"><i class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Issue<span class="fa arrow"></span></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="true">
+                    <li><a href="@Url.Action("Index", "ChatForum")">Add New Issue</a></li>
+                    <li><a href="@Url.Action("GetChatForumDetailList", "ChatForum")">View Issue</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="@Url.Action("LogOut", "Dashboard")">Logout</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
