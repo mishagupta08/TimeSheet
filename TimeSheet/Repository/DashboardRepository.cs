@@ -127,6 +127,31 @@
             return "Something went wrong. Please try again later.";
         }
 
+        public async Task<string> DeleteWorkDetail(string workId)
+        {
+            var workList = await Task.Run(() => entities.WorkDetails.ToList());
+            if (workList == null || workList.Count == 0)
+            {
+                return "Work Detail List is Empty";
+            }
+
+            var workDetail = workList.FirstOrDefault(p => p.WorkDetailId.Trim() == workId);
+
+            if (workDetail == null)
+            {
+                return "Work Detail Not Found!";
+            }
+
+            entities.WorkDetails.Remove(workDetail);
+            var response = await entities.SaveChangesAsync();
+            if (response > 0)
+            {
+                return string.Empty;
+            }
+
+            return "Something went wrong. Please try again later.";
+        }
+
         public async Task<List<Project>> GetProjectList(string projectId, string startDate, string endDate, string status)
         {
             var projectList = await Task.Run(() => entities.ProjectDetails.ToList());
@@ -226,8 +251,8 @@
                     workDetail.ProjectName = detail.ProjectName;
                     workDetail.Remarks = detail.Remarks;
                     workDetail.Hours = detail.Hours;
-                    workDetail.EmployeeId = TimesheetSession.LoginUser.EmployeeId;
-                    workDetail.EmployeeName = TimesheetSession.LoginUser.Name;
+                    workDetail.EmployeeId = detail.EmployeeId;
+                    workDetail.EmployeeName = detail.EmployeeName;
 
                     var result = await entities.SaveChangesAsync();
 
@@ -457,9 +482,9 @@
             var issueDetail = new IssueDetailTable();
             issueDetail.IssueId = Guid.NewGuid().ToString().Substring(0, 3);
             issueDetail.Issue = detail.Issue;
-            issueDetail.PostedBy = TimesheetSession.LoginUser.Name;
+            issueDetail.PostedBy = detail.PostedBy;
             issueDetail.PostedDate = DateTime.Now.ToString();
-            issueDetail.EmailId = TimesheetSession.LoginUser.EmailId;
+            issueDetail.EmailId = detail.EmailId;
 
             return issueDetail;
         }
@@ -663,8 +688,8 @@
             work.Remarks = detail.Remarks;
             work.WorkDetailId = wId.ToString().Substring(0, 3); ;
             work.Hours = detail.Hours;
-            work.EmployeeId = TimesheetSession.LoginUser.EmployeeId;
-            work.EmployeeName = TimesheetSession.LoginUser.Name;
+            work.EmployeeId = detail.EmployeeId;
+            work.EmployeeName = detail.EmployeeName;
             work.WorkProjectName = detail.WorkProjectName;
             return work;
         }
@@ -673,6 +698,17 @@
         {
             TimeDetail timeDetail = new TimeDetail();
             timeDetail.Date = detail.Date.Trim();
+
+            try
+            {
+                String format = "dd-MM-yyyy";
+                DateTime d1 = DateTime.ParseExact(timeDetail.Date, format, CultureInfo.CurrentCulture);
+
+                timeDetail.Date += " (" + d1.DayOfWeek.ToString() + ")";
+            }
+            catch (Exception e)
+            { }
+
             timeDetail.ProjectName = detail.ProjectName.Trim();
             timeDetail.Remarks = detail.Remarks.Trim();
             timeDetail.Id = detail.WorkDetailId.Trim();

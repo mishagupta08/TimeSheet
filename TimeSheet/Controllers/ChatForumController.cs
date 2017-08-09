@@ -62,6 +62,17 @@
 
                 this.dashboardRepository = new DashboardRepository();
 
+                if (Session["LoginUserEmailId"] == null || string.IsNullOrEmpty(Session["LoginUserEmailId"].ToString()))
+                {
+                    return RedirectToAction("Logout", "Dashboard");
+                }
+                else
+                {
+
+                    chatDetailModel.IssueDetails.PostedBy = Session["LoginUserName"].ToString();
+                    chatDetailModel.IssueDetails.EmailId = Session["LoginUserEmailId"].ToString();
+                }
+
                 var eId = await dashboardRepository.SaveChatForum(chatDetailModel.IssueDetails);
 
                 if (!string.IsNullOrEmpty(chatDetailModel.IssueDetails.IssueId) && eId == 0)
@@ -91,7 +102,7 @@
 
                 foreach (var issue in this.chatDetailModel.IssueDetailsList)
                 {
-                    issue.IsEditable = TimesheetSession.LoginUser.Name == issue.PostedBy ? true : false;
+                    issue.IsEditable = Session["LoginUserName"].ToString() == issue.PostedBy ? true : false;
                 }
             }
             catch (Exception e)

@@ -25,12 +25,13 @@
         {
             TimesheetSession.ProjectListSession = null;
             this.dashboardViewModel = new DashboardViewModel();
-            this.dashboardViewModel.LogedinUser = TimesheetSession.LoginUser.Name;
+            this.dashboardViewModel.LogedinUser = Session["LoginUserName"].ToString();
             return View(this.dashboardViewModel);
         }
 
         public async Task<ActionResult> GetDashboardMenu(string SelectedMenu, string editId)
         {
+            TimesheetSession.ProjectListSession = null;
             try
             {
                 if (string.IsNullOrEmpty(SelectedMenu))
@@ -137,7 +138,7 @@
                     this.dashboardViewModel.EmployeeWorkingHourList = this.dashboardViewModel.EmployeeWorkingHourList.OrderBy(e => e.Date).ToList();
                     var consolidatedChildren = from c in this.dashboardViewModel.EmployeeWorkingHourList
                                                group c by new { c.Date, c.EmployeeId, c.EmployeeName } into gcs
-                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, HourDetail = gcs.ToList() };
+                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), HourDetail = gcs.ToList() };
 
                     this.dashboardViewModel.TeamWorkingHourDetail = consolidatedChildren;
 
@@ -247,7 +248,10 @@
         /// </summary>
         public ActionResult LogOut()
         {
-            TimesheetSession.LoginUser = null;
+            Session["LoginUserRoleId"] = null;
+            Session["LoginUserId"] = null;
+            Session["LoginUserName"] = null;
+
             TimesheetSession.SelectedMenu = null;
 
             return RedirectToAction("Index", "Login");
@@ -286,13 +290,13 @@
                 this.dashboardViewModel.EmployeeWorkingHourList = new List<TimeDetail>();
                 this.dashboardRepository = new DashboardRepository();
 
-                if (TimesheetSession.LoginUser.RoleId == "1")
+                if (Session["LoginUserRoleId"].ToString() == "1")
                 {
                     this.dashboardViewModel.EmployeeWorkingHourList = await this.dashboardRepository.GetWorkDetailListByFilter(null, null, null, null, null);
                 }
                 else
                 {
-                    this.dashboardViewModel.EmployeeWorkingHourList = await this.dashboardRepository.GetWorkDetailListByFilter(TimesheetSession.LoginUser.EmployeeId, null, null, null, null);
+                    this.dashboardViewModel.EmployeeWorkingHourList = await this.dashboardRepository.GetWorkDetailListByFilter(Session["LoginUserId"].ToString(), null, null, null, null);
                 }
 
                 if (!(this.dashboardViewModel.EmployeeWorkingHourList == null || this.dashboardViewModel.EmployeeWorkingHourList.Count == 0))
@@ -300,8 +304,7 @@
                     this.dashboardViewModel.EmployeeWorkingHourList = this.dashboardViewModel.EmployeeWorkingHourList.OrderBy(e => e.Date).ToList();
                     var consolidatedChildren = from c in this.dashboardViewModel.EmployeeWorkingHourList
                                                group c by new { c.Date, c.EmployeeId, c.EmployeeName } into gcs
-                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, HourDetail = gcs.ToList() };
-
+                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), HourDetail = gcs.ToList() };
                     this.dashboardViewModel.TeamWorkingHourDetail = consolidatedChildren;
 
                     await this.dashboardViewModel.AssignProjectList();

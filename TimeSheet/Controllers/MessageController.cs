@@ -35,19 +35,48 @@
         {
             MailMessage msg = (MailMessage)mailMsg;
 
-            msg.From = new MailAddress("hr.dtinnovativegroup@gmail.com");
-            SmtpClient client = new SmtpClient();
-            client.Host = "smtp.gmail.com";
-            client.Port = 587;
-            client.EnableSsl = true;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = true;
-            client.Credentials = new NetworkCredential("hr.dtinnovativegroup@gmail.com", "hr@1234567");
-            client.Timeout = 20000;
+            //msg.From = new MailAddress("hr.dtinnovativegroup@gmail.com");
+            //SmtpClient client = new SmtpClient();
+            //client.Host = "smtp.gmail.com";
+            //client.Port = 587;
+            //client.EnableSsl = true;
+            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //client.UseDefaultCredentials = true;
+            //client.Credentials = new NetworkCredential("hr.dtinnovativegroup@gmail.com", "hr@1234567");
+            //client.Timeout = 20000;
+
+            var fromAddress = new MailAddress("hr.dtinnovativegroup@gmail.com");
+            var toAddress = new MailAddress(msg.To.First().Address);
+            const string fromPassword = "hr@1234567";
+
             try
             {
-                await Task.Run(() => client.SendMailAsync(msg));
-                Console.Write("Mail has been successfully sent!");
+                //await Task.Run(() => client.SendMailAsync(msg));
+                //Console.Write("Mail has been successfully sent!");
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = true,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = msg.Subject,
+                    Body = msg.Body,
+                    IsBodyHtml = true,
+                })
+                {
+                    foreach (var ccAddress in msg.CC)
+                    {
+                        message.CC.Add(ccAddress);
+                    }
+
+                    smtp.Send(message);
+                }
+
             }
             catch (Exception ex)
             {
@@ -176,8 +205,6 @@
                 }
 
                 /****Setup timer for next day***/
-
-                SetUpTimer();
             }
             catch (Exception e)
             {
@@ -193,6 +220,8 @@
                 }
 
             }
+
+            SetUpTimer();
         }
     }
 }

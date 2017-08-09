@@ -8,10 +8,10 @@ namespace Timesheet.Common
     /// </summary>
     public static class TimesheetSession
     {
-        /// <summary>
-        /// gets or sets user detail
-        /// </summary>
-        public static UserDetail LoginUser { get; set; }
+        ///// <summary>
+        ///// gets or sets user detail
+        ///// </summary>
+        //public static UserDetail LoginUser { get; set; }
 
         /// <summary>
         /// gets or sets selected menu

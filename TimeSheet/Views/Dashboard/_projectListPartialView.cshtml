@@ -23,7 +23,7 @@
 else
 {
     <button id="export">Export</button>
-    <table border="1" id="table2excel">
+    <table border="1" id="table2excel" style="width:100%">
         <thead>
             <tr>
                 <th>Project ID</th>
@@ -48,7 +48,7 @@ else
 
                 <tr>
                     <td>
-                        <a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.AddProject, editId = emp.Id })">@emp.Id</a>
+                        @emp.Id
                     </td>
                     <td width="200">
                         @emp.Name
@@ -72,7 +72,12 @@ else
                     <td>@Html.Raw(emp.ClientDetail)</td>
                     <td>@Html.Raw(emp.ClientCoordinatorDetail)</td>
 
-                    <td><img src="~/images/delete.png" height="20" name="deleteProject" data-id=@emp.Id /></td>
+                    <td>
+                        <a href="@Url.Action("GetDashboardMenu", "Dashboard", new { SelectedMenu = Resources.AddProject, editId = emp.Id })"><img src="~/images/edit.png" height="20" name="editProjectDetail" /></a>
+                        <img src="~/images/delete.png" height="20" name="deleteProject" data-id=@emp.Id />
+                    </td>
+
+                    <td></td>
                 </tr>
             }
         </tbody>

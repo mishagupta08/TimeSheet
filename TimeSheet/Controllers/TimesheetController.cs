@@ -36,7 +36,7 @@ namespace TimeSheetControllers
             if (!string.IsNullOrEmpty(editId))
             {
                 this.dashboardRepository = new DashboardRepository();
-                var workDetail = await this.dashboardRepository.GetWorkDetailListByFilter(Timesheet.Common.TimesheetSession.LoginUser.EmployeeId, null, null, null, editId);
+                var workDetail = await this.dashboardRepository.GetWorkDetailListByFilter(Session["LoginUserId"].ToString(), null, null, null, editId);
                 if (workDetail != null && workDetail.Count() > 0)
                 {
                     this.timesheetModel.TimeEntryDetail = workDetail.First();
@@ -55,6 +55,17 @@ namespace TimeSheetControllers
                     this.dashboardRepository = new DashboardRepository();
 
                     timesheetEntryDetail.TimeEntryDetail.WorkProjectName = await Task.Run(() => TimesheetSession.ProjectListSession.FirstOrDefault(p => p.Id.Trim() == timesheetEntryDetail.TimeEntryDetail.ProjectName).Name);
+
+                    if (Session["LoginUserId"] == null || string.IsNullOrEmpty(Session["LoginUserId"].ToString()))
+                    {
+                        return RedirectToAction("Logout", "Dashboard");
+                    }
+                    else
+                    {
+                        timesheetEntryDetail.TimeEntryDetail.EmployeeId = Session["LoginUserId"].ToString();
+                        timesheetEntryDetail.TimeEntryDetail.EmployeeName = Session["LoginUserName"].ToString();
+                    }
+
                     var result = await dashboardRepository.AddWorkDetail(timesheetEntryDetail.TimeEntryDetail);
 
                     if (result == 0)
@@ -70,6 +81,28 @@ namespace TimeSheetControllers
             }
 
             return Json("Thanks You..!");
+        }
+
+        public async Task<ActionResult> DeleteWorkDetail(string deleteId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(deleteId))
+                {
+                    return Json("Work detail Id Is Empty");
+                }
+
+                this.dashboardRepository = new DashboardRepository();
+
+                var result = await this.dashboardRepository.DeleteWorkDetail(deleteId);
+
+                return Json(result);
+
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model TimeSheet.Models.DashboardViewModel
+@using TimeSheet.Properties;
 
 @{
     ViewBag.Title = "_employeeWorkingHourReport";
@@ -38,13 +39,18 @@ else
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <label class="control-label col-md-4">Employee</label>
-                <div class="col-md-5">
-                    @Html.DropDownListFor(m => m.Filters.EmployeeId, new SelectList(Model.ReportingEmployeeList, "Id", "Value"), new { @required = "0", id = "maritalStatusDropDown", @class = "form-control" })
+            @if (Session["LoginUserRoleId"].ToString() == Resources.AdminRoleId)
+            {
+
+                <div class="col-md-3">
+                    <label class="control-label col-md-4">Employee</label>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(m => m.Filters.EmployeeId, new SelectList(Model.ReportingEmployeeList, "Id", "Value"), new { @required = "0", id = "maritalStatusDropDown", @class = "form-control" })
+                    </div>
                 </div>
-            </div>
+            }
         </div>
+
 
         <label id="error" class="login-error"></label>
         <div class="form-group text-center m-t-20">

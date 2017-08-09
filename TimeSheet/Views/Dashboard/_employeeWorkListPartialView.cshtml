@@ -5,6 +5,18 @@
     Layout = null;
 }
 
+<div id="dialog" title="Delete Work Detail" style="display:none;">
+    <span id="workDetailId" style="display:none;"></span>
+    <p>Are You Sure!!</p>
+    <button type="button" name="deleteButton">Yes</button>
+    <button type="button" Id="errorNoButton">No</button>
+</div>
+
+<div id="errorDialog" title="Error" style="display:none;">
+    <p id="errorDetail"></p>
+    <button type="button" Id="errorCloseButton">Ok</button>
+</div>
+
 @if (Model == null || Model.TeamWorkingHourDetail == null || Model.TeamWorkingHourDetail.Count() == 0)
 {
     <div>No Record Found</div>
@@ -12,24 +24,21 @@
 else
 {
     <button id="export">Export</button>
-    <table border="1" id="table2excel">
+    <table border="1" id="table2excel" style="width:100%">
         <thead>
-            <tr><th colspan="4">Work Detail List</th></tr>
+            <tr><th colspan="5">Work Detail List</th></tr>
         </thead>
         <tbody>
             @foreach (var f in @Model.TeamWorkingHourDetail)
                 {
                 <tr style="background-color: antiquewhite; border: none;">
-                    <td> ID: @f.EmployeeId </td>
-                    <td> #@f.EmployeeName</td>
-                    <td> Date</td>
-                    <td> @f.WorkDate</td>
+                    <td colspan="5"> <span style="width:33%; display:inline-block;"> @f.EmployeeId &nbsp;#@f.EmployeeName </span><span style="width:33%; display:inline-block;"> Date &nbsp;@f.WorkDate</span><span style="width:33%; display:inline-block;text-align:right;"> Total Hours&nbsp; @f.TotalHour</span></td>
                 </tr>
                 <tr>
                     <td>
                         S.No.
                     </td>
-                    <td>
+                    <td style="width:20%">
                         Project
                     </td>
                     <td>
@@ -38,28 +47,34 @@ else
                     <td>
                         Remark
                     </td>
+                    <td style="width:50px;">
+                        Action
+                    </td>
                 </tr>
                 var sno = 0;
                 foreach (var detail in f.HourDetail)
                 {
                     sno++;
                     <tr>
-                        @if (Session["LoginUserId"].ToString() == detail.EmployeeId)
-                        {
-
-                            <td><a href="@Url.Action("Index", "Timesheet", new { editId = detail.Id })">@sno</a></td>
-                        }
-                        else
-                        {
-                            <td>@sno</td>
-                        }
+                        <td>@sno</td>
                         <td>@detail.WorkProjectName</td>
                         <td>@detail.Hours</td>
                         <td>@detail.Remarks</td>
+                        <td>
+                            @if (Session["LoginUserId"].ToString() == detail.EmployeeId)
+                            {
+                                <a href="@Url.Action("Index", "Timesheet", new { editId = detail.Id })"><img src="~/images/edit.png" height="20" name="editWorkDetail" /></a>
+                                <img src="~/images/delete.png" height="20" name="deleteWorkDetail" data-id=@detail.Id />
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
                     </tr>
                 }
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         -----------------------------------------
                     </td>
                 </tr>
@@ -94,5 +109,59 @@ else
                 });
             });
         }
+
+        jq("img[name=deleteWorkDetail]").click(function () {
+            jq("#dialog").dialog({
+                dialogClass: "noclose"
+            });
+
+            jq("#workDetailId").html("");
+            var editId = jq(this).attr("data-id");
+            jq("#workDetailId").html(editId);
+        });
+
+        $("#errorNoButton").click(function () {
+            $(".ui-dialog-titlebar-close").click();
+        });
+
+        $("button[name=deleteButton]").click(function () {
+            var projId = $("#workDetailId").html()
+            $(".preloader").show();
+            $.ajax({
+                url: '/Timesheet/DeleteWorkDetail',
+                type: 'Post',
+                datatype: 'Json',
+                data: { deleteId: projId }
+            }).done(function (result) {
+                if (result == "" || result == undefined) {
+                    $(".ui-dialog-titlebar-close").click();
+                    window.location.href = '/Dashboard/GetWorkingHourList';
+                }
+                else {
+                    $(".ui-dialog-titlebar-close").click();
+                    $("#errorDetail").html(result);
+                    $(".preloader").hide();
+                    jq("#errorDialog").dialog({
+                        dialogClass: "noclose"
+                    });
+
+                    $("#errorCloseButton").click(function () {
+                        $(".ui-dialog-titlebar-close").click();
+                    });
+                }
+
+            }).fail(function (error) {
+                $("#errorDetail").html(error.statusText);
+                $(".preloader").hide();
+                jq("#errorDialog").dialog();
+            });
+
+            return false;
+        });
     });
 </script>
+<style>
+    .noclose .ui-dialog-titlebar-close {
+        display: none;
+    }
+</style>

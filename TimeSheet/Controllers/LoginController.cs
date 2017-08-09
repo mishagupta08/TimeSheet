@@ -61,10 +61,12 @@ namespace TimeSheetControllers
 
                 Session["LoginUserRoleId"] = user.RoleId;
                 Session["LoginUserId"] = user.EmployeeId;
+                Session["LoginUserName"] = user.Name;
+                Session["LoginUserEmailId"] = user.EmailId;
 
-                TimesheetSession.LoginUser = user;
-                Session["LoginUser"] = user.Name;
-                FormsAuthentication.SetAuthCookie(TimesheetSession.LoginUser.Username, false);
+                // TimesheetSession.LoginUser = user;
+
+                FormsAuthentication.SetAuthCookie(user.EmployeeId, false);
 
                 /****Delete It*****/
 

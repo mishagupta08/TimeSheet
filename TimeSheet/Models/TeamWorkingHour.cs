@@ -35,5 +35,10 @@
         /// gets or sets hour detail list
         /// </summary>
         public IEnumerable<TimeDetail> HourDetail { get; set; }
+
+        /// <summary>
+        /// gets or sets total hours
+        /// </summary>
+        public decimal TotalHour { get; set; }
     }
 }
