@@ -247,7 +247,15 @@
                 var workDetail = await Task.Run(() => entities.WorkDetails.FirstOrDefault(w => w.WorkDetailId.Trim() == detail.Id));
                 if (workDetail != null)
                 {
-                    workDetail.Date = detail.Date;
+                    if (detail.Date.Contains("("))
+                    {
+                        string date = detail.Date.Substring(0, detail.Date.IndexOf("(")-1);
+                        workDetail.Date = date;
+                    }
+                    else
+                    {
+                        workDetail.Date = detail.Date;
+                    }
                     workDetail.ProjectName = detail.ProjectName;
                     workDetail.Remarks = detail.Remarks;
                     workDetail.Hours = detail.Hours;
