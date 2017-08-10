@@ -135,7 +135,6 @@
 
                 if (!(this.dashboardViewModel.EmployeeWorkingHourList == null || this.dashboardViewModel.EmployeeWorkingHourList.Count == 0))
                 {
-                    this.dashboardViewModel.EmployeeWorkingHourList = this.dashboardViewModel.EmployeeWorkingHourList.OrderBy(e => e.Date).ToList();
                     var consolidatedChildren = from c in this.dashboardViewModel.EmployeeWorkingHourList
                                                group c by new { c.Date, c.EmployeeId, c.EmployeeName } into gcs
                                                select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), HourDetail = gcs.ToList() };
@@ -301,7 +300,6 @@
 
                 if (!(this.dashboardViewModel.EmployeeWorkingHourList == null || this.dashboardViewModel.EmployeeWorkingHourList.Count == 0))
                 {
-                    this.dashboardViewModel.EmployeeWorkingHourList = this.dashboardViewModel.EmployeeWorkingHourList.OrderBy(e => e.Date).ToList();
                     var consolidatedChildren = from c in this.dashboardViewModel.EmployeeWorkingHourList
                                                group c by new { c.Date, c.EmployeeId, c.EmployeeName } into gcs
                                                select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), HourDetail = gcs.ToList() };

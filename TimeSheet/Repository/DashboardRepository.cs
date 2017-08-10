@@ -347,8 +347,9 @@
 
         public async Task<List<TimeDetail>> GetWorkDetailListByFilter(string employeeId, string date, string endDate, string projectId, string workId)
         {
+            string format = "dd-MM-yyyy";
             var workList = await Task.Run(() => entities.WorkDetails.ToList());
-
+            workList = workList.OrderByDescending(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture)).ToList();
             if (!string.IsNullOrEmpty(date))
             {
                 //date = date.Trim();
@@ -356,7 +357,7 @@
 
                 date = date.Trim();
 
-                String format = "dd-MM-yyyy";
+                
                 DateTime d1 = DateTime.ParseExact(date, format, CultureInfo.CurrentCulture);
 
                 workList = workList.Where(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture) >= d1).ToList();
@@ -365,8 +366,7 @@
             if (!string.IsNullOrEmpty(endDate))
             {
                 endDate = endDate.Trim();
-
-                String format = "dd-MM-yyyy";
+               
                 DateTime d2 = DateTime.ParseExact(endDate, format, CultureInfo.CurrentCulture);
                 workList = workList.Where(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture) <= d2).ToList();
             }
