@@ -40,5 +40,10 @@
         /// gets or sets total hours
         /// </summary>
         public decimal TotalHour { get; set; }
+
+        /// <summary>
+        /// gets or sets total minutes
+        /// </summary>
+        public decimal TotalMinutes { get; set; }
     }
 }

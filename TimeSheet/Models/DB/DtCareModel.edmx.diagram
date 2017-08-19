@@ -7,9 +7,9 @@
       <Diagram DiagramId="e7bbcfaafbb14995b8d991702a4caa4c" Name="Diagram1">
         <EntityTypeShape EntityType="DtCareModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DtCareModel.Role" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DtCareModel.WorkDetail" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DtCareModel.ProjectDetail" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="DtCareModel.IssueDetailTable" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DtCareModel.WorkDetail" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

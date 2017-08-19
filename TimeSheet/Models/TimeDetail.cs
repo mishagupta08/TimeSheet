@@ -36,6 +36,11 @@
         public string Hours { get; set; }
 
         /// <summary>
+        /// gets or sets minutes
+        /// </summary>
+        public string Minutes { get; set; }
+
+        /// <summary>
         /// gets or sets remark
         /// </summary>
         public string Remarks { get; set; }

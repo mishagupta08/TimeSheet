@@ -22,5 +22,6 @@ namespace TimeSheet.Models.DB
         public string Remarks { get; set; }
         public string Date { get; set; }
         public string WorkProjectName { get; set; }
+        public string Minutes { get; set; }
     }
 }

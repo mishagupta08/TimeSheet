@@ -29,10 +29,11 @@ else
             <tr><th colspan="5">Work Detail List</th></tr>
         </thead>
         <tbody>
-            @foreach (var f in @Model.TeamWorkingHourDetail)
+            @foreach (var f in Model.TeamWorkingHourDetail)
                 {
                 <tr style="background-color: antiquewhite; border: none;">
-                    <td colspan="5"> <span style="width:33%; display:inline-block;"> @f.EmployeeId &nbsp;#@f.EmployeeName </span><span style="width:33%; display:inline-block;"> Date &nbsp;@f.WorkDate</span><span style="width:33%; display:inline-block;text-align:right;"> Total Hours&nbsp; @f.TotalHour</span></td>
+                    @{decimal hour = (Convert.ToDecimal(f.TotalHour) + (Convert.ToDecimal(f.TotalMinutes)/60));}
+                    <td colspan="5"> <span style="width:33%; display:inline-block;"> @f.EmployeeId &nbsp;#@f.EmployeeName </span><span style="width:33%; display:inline-block;"> Date &nbsp;@f.WorkDate</span><span style="width:33%; display:inline-block;text-align:right;"> Total Hours&nbsp; @hour.ToString("0.##") </span></td>
                 </tr>
                 <tr>
                     <td>
@@ -58,7 +59,9 @@ else
                     <tr>
                         <td>@sno</td>
                         <td>@detail.WorkProjectName</td>
-                        <td>@detail.Hours</td>
+                        <td>@{decimal time = (Convert.ToDecimal(detail.Hours) + (Convert.ToDecimal(detail.Minutes) / 60));}
+                          @time.ToString("0.##")
+                        </td>
                         <td>@detail.Remarks</td>
                         <td>
                             @if (Session["LoginUserId"].ToString() == detail.EmployeeId)

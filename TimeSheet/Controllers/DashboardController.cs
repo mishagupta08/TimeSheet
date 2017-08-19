@@ -137,7 +137,7 @@
                 {
                     var consolidatedChildren = from c in this.dashboardViewModel.EmployeeWorkingHourList
                                                group c by new { c.Date, c.EmployeeId, c.EmployeeName } into gcs
-                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), HourDetail = gcs.ToList() };
+                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)),TotalMinutes= gcs.Sum(r => Convert.ToDecimal(r.Minutes)), HourDetail = gcs.ToList() };
 
                     this.dashboardViewModel.TeamWorkingHourDetail = consolidatedChildren;
 
@@ -302,7 +302,7 @@
                 {
                     var consolidatedChildren = from c in this.dashboardViewModel.EmployeeWorkingHourList
                                                group c by new { c.Date, c.EmployeeId, c.EmployeeName } into gcs
-                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), HourDetail = gcs.ToList() };
+                                               select new TeamWorkingHour() { WorkDate = gcs.Key.Date, EmployeeId = gcs.Key.EmployeeId, EmployeeName = gcs.Key.EmployeeName, TotalHour = gcs.Sum(r => Convert.ToDecimal(r.Hours)), TotalMinutes = gcs.Sum(r => Convert.ToDecimal(r.Minutes)), HourDetail = gcs.ToList() };
                     this.dashboardViewModel.TeamWorkingHourDetail = consolidatedChildren;
 
                     await this.dashboardViewModel.AssignProjectList();

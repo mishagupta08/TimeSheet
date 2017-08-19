@@ -27,8 +27,8 @@ namespace TimeSheet.Models.DB
     
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<WorkDetail> WorkDetails { get; set; }
         public virtual DbSet<ProjectDetail> ProjectDetails { get; set; }
         public virtual DbSet<IssueDetailTable> IssueDetailTables { get; set; }
+        public virtual DbSet<WorkDetail> WorkDetails { get; set; }
     }
 }

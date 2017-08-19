@@ -76,6 +76,7 @@
           <Property Name="Remarks" Type="varchar" MaxLength="1000" />
           <Property Name="Date" Type="varchar" MaxLength="20" />
           <Property Name="WorkProjectName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Minutes" Type="varchar" MaxLength="5" />
         </EntityType>
         <EntityContainer Name="DtCareModelStoreContainer">
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -116,25 +117,12 @@
           <Property Name="RoleId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Role1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="WorkDetail">
-          <Key>
-            <PropertyRef Name="WorkDetailId" />
-          </Key>
-          <Property Name="WorkDetailId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EmployeeId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Hours" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="WorkProjectName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityContainer Name="DtCareEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="WorkDetails" EntityType="Self.WorkDetail" />
           <EntitySet Name="ProjectDetails" EntityType="DtCareModel.ProjectDetail" />
           <EntitySet Name="IssueDetailTables" EntityType="DtCareModel.IssueDetailTable" />
+          <EntitySet Name="WorkDetails" EntityType="DtCareModel.WorkDetail" />
         </EntityContainer>
         <EntityType Name="ProjectDetail">
           <Key>
@@ -166,6 +154,20 @@
           <Property Name="PostedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PostedDate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WorkDetail">
+          <Key>
+            <PropertyRef Name="WorkDetailId" />
+          </Key>
+          <Property Name="WorkDetailId" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hours" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WorkProjectName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Minutes" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -203,20 +205,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WorkDetails">
-            <EntityTypeMapping TypeName="DtCareModel.WorkDetail">
-              <MappingFragment StoreEntitySet="WorkDetail">
-                <ScalarProperty Name="WorkProjectName" ColumnName="WorkProjectName" />
-                <ScalarProperty Name="WorkDetailId" ColumnName="WorkDetailId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="Hours" ColumnName="Hours" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProjectDetails">
             <EntityTypeMapping TypeName="DtCareModel.ProjectDetail">
               <MappingFragment StoreEntitySet="ProjectDetail">
@@ -247,6 +235,21 @@
                 <ScalarProperty Name="PostedBy" ColumnName="PostedBy" />
                 <ScalarProperty Name="Issue" ColumnName="Issue" />
                 <ScalarProperty Name="IssueId" ColumnName="IssueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkDetails">
+            <EntityTypeMapping TypeName="DtCareModel.WorkDetail">
+              <MappingFragment StoreEntitySet="WorkDetail">
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="WorkProjectName" ColumnName="WorkProjectName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="WorkDetailId" ColumnName="WorkDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
