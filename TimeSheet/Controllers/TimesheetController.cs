@@ -33,6 +33,8 @@ namespace TimeSheetControllers
                 timesheetModel.ProjectList = TimesheetSession.ProjectListSession;
             }
 
+            this.timesheetModel.TimeEntryDetail.Minutes = "0";
+
             if (!string.IsNullOrEmpty(editId))
             {
                 this.dashboardRepository = new DashboardRepository();
@@ -64,6 +66,11 @@ namespace TimeSheetControllers
                     {
                         timesheetEntryDetail.TimeEntryDetail.EmployeeId = Session["LoginUserId"].ToString();
                         timesheetEntryDetail.TimeEntryDetail.EmployeeName = Session["LoginUserName"].ToString();
+                    }
+
+                    if (string.IsNullOrEmpty(timesheetEntryDetail.TimeEntryDetail.Minutes))
+                    {
+                        timesheetEntryDetail.TimeEntryDetail.Minutes = "0";
                     }
 
                     var result = await dashboardRepository.AddWorkDetail(timesheetEntryDetail.TimeEntryDetail);
