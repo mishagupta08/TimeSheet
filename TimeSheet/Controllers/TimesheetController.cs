@@ -68,10 +68,10 @@ namespace TimeSheetControllers
                         timesheetEntryDetail.TimeEntryDetail.EmployeeName = Session["LoginUserName"].ToString();
                     }
 
-                    if (string.IsNullOrEmpty(timesheetEntryDetail.TimeEntryDetail.Minutes))
-                    {
-                        timesheetEntryDetail.TimeEntryDetail.Minutes = "0";
-                    }
+                    //if (string.IsNullOrEmpty(timesheetEntryDetail.TimeEntryDetail.Minutes))
+                    //{
+                    //    timesheetEntryDetail.TimeEntryDetail.Minutes = "0";
+                    //}
 
                     var result = await dashboardRepository.AddWorkDetail(timesheetEntryDetail.TimeEntryDetail);
 

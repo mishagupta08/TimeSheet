@@ -132,4 +132,7 @@
   <data name="DefaulterList" xml:space="preserve">
     <value>Defaulter List</value>
   </data>
+  <data name="NoRecord" xml:space="preserve">
+    <value>No Records Found</value>
+  </data>
 </root>

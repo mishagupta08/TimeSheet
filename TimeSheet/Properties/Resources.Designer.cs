@@ -104,5 +104,14 @@ namespace TimeSheet.Properties {
                 return ResourceManager.GetString("DefaulterList", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Records Found.
+        /// </summary>
+        public static string NoRecord {
+            get {
+                return ResourceManager.GetString("NoRecord", resourceCulture);
+            }
+        }
     }
 }

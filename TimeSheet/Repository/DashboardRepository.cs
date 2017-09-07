@@ -4,12 +4,14 @@
 
     using Models;
     using Models.DB;
+    using Properties;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Web.Script.Serialization;
     using Timesheet.Common;
 
     #endregion namespace
@@ -249,7 +251,7 @@
                 {
                     if (detail.Date.Contains("("))
                     {
-                        string date = detail.Date.Substring(0, detail.Date.IndexOf("(")-1);
+                        string date = detail.Date.Substring(0, detail.Date.IndexOf("(") - 1);
                         workDetail.Date = date;
                     }
                     else
@@ -366,7 +368,7 @@
 
                 date = date.Trim();
 
-                
+
                 DateTime d1 = DateTime.ParseExact(date, format, CultureInfo.CurrentCulture);
 
                 workList = workList.Where(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture) >= d1).ToList();
@@ -375,7 +377,7 @@
             if (!string.IsNullOrEmpty(endDate))
             {
                 endDate = endDate.Trim();
-               
+
                 DateTime d2 = DateTime.ParseExact(endDate, format, CultureInfo.CurrentCulture);
                 workList = workList.Where(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture) <= d2).ToList();
             }
@@ -575,7 +577,7 @@
             {
                 foreach (var work in list)
                 {
-                    detail.ConsumedHours += (Convert.ToDecimal(work.Hours.Trim()) + (Convert.ToDecimal(work.Minutes.Trim())/60));
+                    detail.ConsumedHours += (Convert.ToDecimal(work.Hours.Trim()) + (Convert.ToDecimal(work.Minutes.Trim()) / 60));
                 }
 
                 detail.RemainingHour = detail.AllottedHour - detail.ConsumedHours;
@@ -697,7 +699,7 @@
             work.Remarks = detail.Remarks;
             work.WorkDetailId = wId.ToString().Substring(0, 3); ;
             work.Hours = detail.Hours;
-            work.Minutes = detail.Minutes;
+            work.Minutes = string.IsNullOrEmpty(detail.Minutes) ? "0" : detail.Minutes;
             work.EmployeeId = detail.EmployeeId;
             work.EmployeeName = detail.EmployeeName;
             work.WorkProjectName = detail.WorkProjectName;
@@ -732,5 +734,55 @@
         }
 
         /*****mapper classes******/
-    }
+
+        public async Task<Response> AddTimesheetApi(TimeDetail detail)
+        {
+            var response = new Response();
+            try
+            {
+                var result = await AddWorkDetail(detail);
+                if (result <= 0)
+                {
+                    response.ResponseValue = Resources.CommonErorMessage;
+                }
+                else
+                {
+                    response.ResponseValue = "Thank You.!";
+                    response.Status = true;
+                }
+            }
+            catch (Exception e)
+            {
+                response.ResponseValue = e.Message;
+            }
+
+            return response;
+        }
+
+        public async Task<Response> GetTimesheetWorkDetail(Filters filters)
+        {
+            var response = new Response();
+            try
+            {
+                var result = await this.GetWorkDetailListByFilter(filters.EmployeeId, filters.Date, filters.EndDate, filters.ProjectId, filters.workId);
+                if (result == null || result.Count == 0)
+                {
+                    response.ResponseValue = Resources.NoRecord;
+                }
+                else
+                {
+                    response.ResponseValue = new JavaScriptSerializer().Serialize(result);
+                    response.Status = true;
+                }
+            }
+            catch (Exception e)
+            {
+                response.ResponseValue = e.Message;
+            }
+
+            return response;
+        }
+
+        
+        }
 }

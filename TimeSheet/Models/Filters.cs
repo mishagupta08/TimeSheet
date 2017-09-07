@@ -15,6 +15,8 @@ namespace TimeSheet.Models
 
         public string EndDate { get; set; }
 
+        public string workId { get; set; }
+
         public string ProjectStatus { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace TimeSheetSession
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
             var msg = new MessageController();
             msg.SetUpTimer();
         }

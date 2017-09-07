@@ -89,6 +89,9 @@
       <HintPath>Library\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>C:\Users\lenovo\Documents\Visual Studio 2015\Projects\ShineYatraAdmin\Library\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -100,6 +103,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http">
+      <HintPath>C:\Users\lenovo\Documents\Visual Studio 2015\Projects\ShineYatraAdmin\Library\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -192,6 +198,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\TimesheetController.cs" />
+    <Compile Include="Controllers\TimsheetApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,6 +240,7 @@
     <Compile Include="Models\LoginApiClasses.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Models\TeamWorkingHour.cs" />
     <Compile Include="Models\TimeDetail.cs" />
     <Compile Include="Models\TimesheetModel.cs" />
@@ -277,6 +285,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Message\" />
+    <Folder Include="Views\TimsheetApi\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
