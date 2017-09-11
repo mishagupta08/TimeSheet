@@ -34,5 +34,23 @@ namespace TimeSheet.Controllers
             var result = await this.dashboardRepository.GetTimesheetWorkDetail(timeDetail);
             return Content(HttpStatusCode.OK, result, Configuration.Formatters.JsonFormatter);
         }
+
+        [HttpGet, Route("api/TimsheetApi/DeleteWork/{workId}")]
+        public async Task<IHttpActionResult> DeleteWork(string workId)
+        {
+            this.dashboardRepository = new DashboardRepository();
+            var result = await this.dashboardRepository.DeleteWorkDetail(workId);
+            return Content(HttpStatusCode.OK, result, Configuration.Formatters.JsonFormatter);
+        }
+
+        [HttpPost, Route("api/TimsheetApi/GetProjectList")]
+        public async Task<IHttpActionResult> GetProjectList()
+        {
+            var detail = await Request.Content.ReadAsStringAsync();
+            var timeDetail = JsonConvert.DeserializeObject<Filters>(detail);
+            this.dashboardRepository = new DashboardRepository();
+            var result = await this.dashboardRepository.GetProjectList(timeDetail);
+            return Content(HttpStatusCode.OK, result, Configuration.Formatters.JsonFormatter);
+        }
     }
 }

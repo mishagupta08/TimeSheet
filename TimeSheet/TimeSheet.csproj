@@ -106,6 +106,9 @@
     <Reference Include="System.Web.Http">
       <HintPath>C:\Users\lenovo\Documents\Visual Studio 2015\Projects\ShineYatraAdmin\Library\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>C:\Users\lenovo\Documents\Visual Studio 2015\Projects\LifePlus\Library\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -191,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\EmailService.cs" />
     <Compile Include="Common\TimesheetSession.cs" />
     <Compile Include="Controllers\ChatForumController.cs" />

@@ -740,15 +740,22 @@
             var response = new Response();
             try
             {
-                var result = await AddWorkDetail(detail);
-                if (result <= 0)
+                if (detail == null)
                 {
-                    response.ResponseValue = Resources.CommonErorMessage;
+                    response.ResponseValue = "Please send complete detail";
                 }
                 else
                 {
-                    response.ResponseValue = "Thank You.!";
-                    response.Status = true;
+                    var result = await AddWorkDetail(detail);
+                    if (result <= 0)
+                    {
+                        response.ResponseValue = Resources.CommonErorMessage;
+                    }
+                    else
+                    {
+                        response.ResponseValue = "Thank You.!";
+                        response.Status = true;
+                    }
                 }
             }
             catch (Exception e)
@@ -764,6 +771,11 @@
             var response = new Response();
             try
             {
+                if (filters == null)
+                {
+                    filters = new Filters();
+                }
+
                 var result = await this.GetWorkDetailListByFilter(filters.EmployeeId, filters.Date, filters.EndDate, filters.ProjectId, filters.workId);
                 if (result == null || result.Count == 0)
                 {
@@ -783,6 +795,33 @@
             return response;
         }
 
-        
+        public async Task<Response> GetProjectList(Filters filters)
+        {
+            var response = new Response();
+            try
+            {
+                if (filters == null)
+                {
+                    filters = new Filters();
+                }
+
+                var result = await this.GetProjectList(filters.ProjectId, filters.Date, filters.EndDate, filters.ProjectStatus);
+                if (result == null || result.Count == 0)
+                {
+                    response.ResponseValue = Resources.NoRecord;
+                }
+                else
+                {
+                    response.ResponseValue = new JavaScriptSerializer().Serialize(result);
+                    response.Status = true;
+                }
+            }
+            catch (Exception e)
+            {
+                response.ResponseValue = e.Message;
+            }
+
+            return response;
         }
+    }
 }
