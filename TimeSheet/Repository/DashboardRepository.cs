@@ -577,7 +577,7 @@
             {
                 foreach (var work in list)
                 {
-                    detail.ConsumedHours += (Convert.ToDecimal(work.Hours.Trim()) + (Convert.ToDecimal(work.Minutes.Trim()) / 60));
+                    detail.ConsumedHours += (Convert.ToDecimal(work.Hours.Trim()) + (Convert.ToDecimal(work.Minutes == null ? "0" : work.Minutes.Trim()) / 60));
                 }
 
                 detail.RemainingHour = detail.AllottedHour - detail.ConsumedHours;
@@ -725,7 +725,7 @@
             timeDetail.Remarks = detail.Remarks.Trim();
             timeDetail.Id = detail.WorkDetailId.Trim();
             timeDetail.Hours = detail.Hours.Trim();
-            timeDetail.Minutes = detail.Minutes.Trim();
+            timeDetail.Minutes = detail.Minutes == null ? "0" : detail.Minutes.Trim();
             timeDetail.EmployeeId = detail.EmployeeId.Trim();
             timeDetail.EmployeeName = detail.EmployeeName.Trim();
             timeDetail.WorkProjectName = detail.WorkProjectName;
