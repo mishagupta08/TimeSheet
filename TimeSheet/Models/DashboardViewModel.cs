@@ -86,19 +86,16 @@ namespace TimeSheet.Models
 
             if (empList != null)
             {
-                empList = empList.OrderBy(e => e.first_name).ToList();
+                empList = empList.OrderBy(e => e.name).ToList();
                 this.ReportingEmployeeList = new List<KeyValuePair>();
 
                 foreach (var emp in empList)
-                {
-                    if (emp.status == "1")
-                    {
+                {                    
                         this.ReportingEmployeeList.Add(new KeyValuePair
                         {
                             Id = emp.id,
-                            Value = emp.first_name + " " + emp.last_name
-                        });
-                    }
+                            Value = emp.name
+                        });                    
                 }
             }
 

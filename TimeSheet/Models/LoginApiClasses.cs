@@ -36,6 +36,9 @@ namespace TimeSheet.Models
         public string mobile_verify { get; set; }
         public string status { get; set; }
         public string created { get; set; }
+        public string name { get; set; }
+        public string role_name { get; set; }
+        public string department { get; set; }
     }
 
     public class RootObject
@@ -43,6 +46,8 @@ namespace TimeSheet.Models
         public string code { get; set; }
         public string message { get; set; }
         public User User { get; set; }
-        public List<User> employeeList { get; set; }
+        public List<User> employeeList { get; set; }        
     }
+
+    
 }
