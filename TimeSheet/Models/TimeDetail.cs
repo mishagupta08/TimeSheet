@@ -1,4 +1,6 @@
-﻿namespace TimeSheet.Models
+﻿using System;
+
+namespace TimeSheet.Models
 {
     /// <summary>
     /// Class to hold timesheet setail
@@ -49,5 +51,12 @@
         /// gets or sets date
         /// </summary>
         public string Date { get; set; }
+
+        /// <summary>
+        /// gets or sets submit date
+        /// </summary>
+        public Nullable<System.DateTime> SubmitDate { get; set; }
+
+        public DateTime AddedDate { get; set; }
     }
 }

@@ -7,7 +7,7 @@ function SaveEmployeeDetail() {
     var loginDetail = $('#employeeform').serialize();
     $(".preloader").show();
     $.ajax({
-        url: '/Dashboard/SaveEmployeeDetail',
+        url: '/Dashboard/GetSelectedMenu',
         type: 'Post',
         datatype: 'Json',
         data: loginDetail

@@ -264,6 +264,7 @@
                     workDetail.Minutes = detail.Minutes;
                     workDetail.EmployeeId = detail.EmployeeId;
                     workDetail.EmployeeName = detail.EmployeeName;
+                    workDetail.SubmitDate = detail.SubmitDate;
 
                     var result = await entities.SaveChangesAsync();
 
@@ -697,12 +698,13 @@
             work.Date = detail.Date;
             work.ProjectName = detail.ProjectName;
             work.Remarks = detail.Remarks;
-            work.WorkDetailId = wId.ToString().Substring(0, 3); ;
+            work.WorkDetailId = wId.ToString().Substring(0, 9); ;
             work.Hours = detail.Hours;
             work.Minutes = string.IsNullOrEmpty(detail.Minutes) ? "0" : detail.Minutes;
             work.EmployeeId = detail.EmployeeId;
             work.EmployeeName = detail.EmployeeName;
             work.WorkProjectName = detail.WorkProjectName;
+            work.SubmitDate = DateTime.Now;
             return work;
         }
 
@@ -715,7 +717,7 @@
             {
                 String format = "dd-MM-yyyy";
                 DateTime d1 = DateTime.ParseExact(timeDetail.Date, format, CultureInfo.CurrentCulture);
-
+                timeDetail.AddedDate = d1;
                 timeDetail.Date += " (" + d1.DayOfWeek.ToString() + ")";
             }
             catch (Exception e)
@@ -729,6 +731,7 @@
             timeDetail.EmployeeId = detail.EmployeeId.Trim();
             timeDetail.EmployeeName = detail.EmployeeName.Trim();
             timeDetail.WorkProjectName = detail.WorkProjectName;
+            timeDetail.SubmitDate = detail.SubmitDate;
 
             return timeDetail;
         }

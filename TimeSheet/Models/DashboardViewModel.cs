@@ -17,7 +17,7 @@ namespace TimeSheet.Models
         /// <summary>
         /// gets or sets team work detail list
         /// </summary>
-        public IEnumerable<TeamWorkingHour> TeamWorkingHourDetail { get; set; }
+        public IList<TeamWorkingHour> TeamWorkingHourDetail { get; set; }
 
         /// <summary>
         /// gets or sets project list

@@ -23,5 +23,6 @@ namespace TimeSheet.Models.DB
         public string Date { get; set; }
         public string WorkProjectName { get; set; }
         public string Minutes { get; set; }
+        public Nullable<System.DateTime> SubmitDate { get; set; }
     }
 }
