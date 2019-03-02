@@ -83,12 +83,13 @@
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery-ui.min.js"></script>
 
-<script src="~/Scripts/project/timesheet.js"></script>
+<script src="~/Scripts/project/timesheet.js?v=1"></script>
 <script>
     var jq = $.noConflict();
     var dateToday = new Date();
     dateToday.setDate(dateToday.getDate() - 2);
     var max = new Date;
+
     jq(document).ready(function () {
         // Date Picker
         jq('#dateinput').datepicker({
@@ -96,7 +97,12 @@
             todayHighlight: true,
             dateFormat: "dd-mm-yy",
             minDate: dateToday,
-            maxDate: max
+            maxDate: max,
         });
+
+        
     });
+
+    
+
 </script>
