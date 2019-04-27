@@ -34,7 +34,7 @@
                         <div class="form-group ">
                             <label class="control-label col-md-3">Date*</label>
                             <div class="col-md-3">
-                                @Html.TextBoxFor(m => m.TimeEntryDetail.Date, new { @id = "dateinput", @required = "", @class = "form-control datepicker", @placeholder = "dd/mm/yyyy" })
+                                @Html.TextBoxFor(m => m.TimeEntryDetail.Date, new { @id = "dateinput", @required = "",@readonly= "readonly", @class = "form-control datepicker", @placeholder = "dd/mm/yyyy" })
                             </div>
                         </div>
                         <div class="form-group">

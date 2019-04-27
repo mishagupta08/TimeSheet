@@ -704,7 +704,7 @@
             work.EmployeeId = detail.EmployeeId;
             work.EmployeeName = detail.EmployeeName;
             work.WorkProjectName = detail.WorkProjectName;
-            work.SubmitDate = DateTime.Now;
+            work.SubmitDate = detail.SubmitDate;
             return work;
         }
 

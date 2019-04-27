@@ -34,7 +34,7 @@ namespace TimeSheetControllers
             }
 
             this.timesheetModel.TimeEntryDetail.Minutes = "0";
-
+            this.timesheetModel.TimeEntryDetail.SubmitDate = DateTime.Now;
             if (!string.IsNullOrEmpty(editId))
             {
                 this.dashboardRepository = new DashboardRepository();
