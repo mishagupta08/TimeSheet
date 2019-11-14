@@ -265,10 +265,16 @@
                     workDetail.EmployeeId = detail.EmployeeId;
                     workDetail.EmployeeName = detail.EmployeeName;
                     workDetail.SubmitDate = detail.SubmitDate;
+                    try
+                    {
+                        var result = await entities.SaveChangesAsync();
 
-                    var result = await entities.SaveChangesAsync();
-
-                    return result;
+                        return result;
+                    }
+                    catch (Exception es)
+                    {
+                        return -1;
+                    }
                 }
             }
 
@@ -360,8 +366,37 @@
         public async Task<List<TimeDetail>> GetWorkDetailListByFilter(string employeeId, string date, string endDate, string projectId, string workId)
         {
             string format = "dd-MM-yyyy";
-            var workList = await Task.Run(() => entities.WorkDetails.ToList());
-            workList = workList.OrderByDescending(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture)).ToList();
+            List<WorkDetail> workList = null;
+
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+
+            if ((yesterday.DayOfWeek == DayOfWeek.Sunday))
+            {
+                yesterday = yesterday.AddDays(-1);
+            }
+
+
+            if (!string.IsNullOrEmpty(workId))
+            {
+                workId = workId.Trim();
+                workList = await Task.Run(() => entities.WorkDetails.Where(detail => detail.WorkDetailId.Trim() == workId).ToList());
+            }
+
+            else if (!(string.IsNullOrEmpty(employeeId) || employeeId == "0"))
+            {
+                employeeId = employeeId.Trim();
+                workList = await Task.Run(() => entities.WorkDetails.Where(r => r.EmployeeId == employeeId).ToList());
+            }
+            else
+            {
+                workList = await Task.Run(() => entities.WorkDetails.ToList());
+            }
+            
+            if (string.IsNullOrEmpty(workId) && string.IsNullOrEmpty(date) && string.IsNullOrEmpty(endDate))
+            {
+                workList = workList.Where(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture).Date >= yesterday.Date).ToList();
+            }
+
             if (!string.IsNullOrEmpty(date))
             {
                 //date = date.Trim();
@@ -381,24 +416,12 @@
 
                 DateTime d2 = DateTime.ParseExact(endDate, format, CultureInfo.CurrentCulture);
                 workList = workList.Where(p => DateTime.ParseExact(p.Date.Trim(), format, CultureInfo.CurrentCulture) <= d2).ToList();
-            }
-
-            if (!(string.IsNullOrEmpty(employeeId) || employeeId == "0"))
-            {
-                employeeId = employeeId.Trim();
-                workList = workList.Where(detail => detail.EmployeeId.Trim() == employeeId).ToList();
-            }
+            }            
 
             if (!(string.IsNullOrEmpty(projectId) || projectId == "0"))
             {
                 projectId = projectId.Trim();
                 workList = workList.Where(detail => detail.ProjectName.Trim() == projectId).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(workId))
-            {
-                workId = workId.Trim();
-                workList = workList.Where(detail => detail.WorkDetailId.Trim() == workId).ToList();
             }
 
             if (workList == null)

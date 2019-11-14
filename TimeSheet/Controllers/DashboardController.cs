@@ -324,7 +324,7 @@
                             this.dashboardViewModel.TeamWorkingHourDetail[i].TotalMinutes = this.dashboardViewModel.TeamWorkingHourDetail[i].TotalMinutes - 60;
                         }
                     }
-
+                }
                     await this.dashboardViewModel.AssignProjectList();
                     if (Session["LoginUserRoleId"].ToString() == "1")
                     {
@@ -337,7 +337,7 @@
 
                     return View("_employeeWorkingHourReport", this.dashboardViewModel);
 
-                }
+                
             }
             catch (Exception e)
             {

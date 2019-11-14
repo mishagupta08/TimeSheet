@@ -10,12 +10,7 @@
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery-ui.min.js"></script>
 
-@if (Model == null || Model.TeamWorkingHourDetail == null || Model.TeamWorkingHourDetail.Count() == 0)
-{
-    <div>No Record Found</div>
-}
-else
-{
+
     <form class="form-horizontal form-material" id="workDetailFilterform" onsubmit="return FilterWorkReport();">
         <div class="form-group text-center m-t-20">
             <div class="col-md-3">
@@ -94,5 +89,5 @@ else
         @Html.Partial("~/Views/Dashboard/_employeeWorkListPartialView.cshtml", Model)
 
     </div>
-}
+
 <script src="~/Scripts/project/dashboard.js"></script>
